@@ -6,7 +6,7 @@ import java.util.Date;
 public record MetricsDTO(
         Long id,
         LocalDateTime timestamp,
-        int motorID,
+        String motorID,
         double line1Voltage,
         double line2Voltage,
         double line3Voltage,

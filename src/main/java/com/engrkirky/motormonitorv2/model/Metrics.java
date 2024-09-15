@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,15 +17,16 @@ import java.time.LocalDateTime;
 @Builder
 public class Metrics {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "timestamp")
+    @CreationTimestamp
+    @Column(name = "timestamp", updatable = false)
     private LocalDateTime timestamp;
 
     @Column(name = "motor_id")
-    private int motorID;
+    private String motorID;
 
     @Column(name = "line1_voltage")
     private double line1Voltage;
