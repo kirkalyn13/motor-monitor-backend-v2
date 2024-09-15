@@ -1,17 +1,16 @@
 package com.engrkirky.motormonitorv2.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public record MetricsDTO(
         Long id,
-        Date timestamp,
-        Integer motorID,
-        Double line1Voltage,
-        Double line2Voltage,
-        Double line3Voltage,
-        Double line1Current,
-        Double line2Current,
-        Double line3Current,
-        Double temperature
-) {
-}
+        LocalDateTime timestamp,
+        String motorID,
+        double line1Voltage,
+        double line2Voltage,
+        double line3Voltage,
+        double line1Current,
+        double line2Current,
+        double line3Current,
+        double temperature
+) {}

@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,34 +17,35 @@ import java.util.Date;
 @Builder
 public class Metrics {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "timestamp")
-    private Date timestamp;
+    @CreationTimestamp
+    @Column(name = "timestamp", updatable = false)
+    private LocalDateTime timestamp;
 
     @Column(name = "motor_id")
-    private Integer motorID;
+    private String motorID;
 
     @Column(name = "line1_voltage")
-    private Double line1Voltage;
+    private double line1Voltage;
 
     @Column(name = "line2_voltage")
-    private Double line2Voltage;
+    private double line2Voltage;
 
     @Column(name = "line3_voltage")
-    private Double line3Voltage;
+    private double line3Voltage;
 
     @Column(name = "line1_current")
-    private Double line1Current;
+    private double line1Current;
 
     @Column(name = "line2_current")
-    private Double line2Current;
+    private double line2Current;
 
     @Column(name = "line3_current")
-    private Double line3Current;
+    private double line3Current;
 
     @Column(name = "temperature")
-    private Double temperature;
+    private double temperature;
 }
