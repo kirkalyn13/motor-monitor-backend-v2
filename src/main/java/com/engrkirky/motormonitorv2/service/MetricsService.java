@@ -9,7 +9,7 @@ public interface MetricsService {
     List<VoltageDTO> getVoltageTrend(String id, int limit);
     List<CurrentDTO> getCurrentTrend(String id, int limit);
     List<TemperatureDTO> getTemperatureTrend(String id, int limit);
-    List<Integer> getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature);
+    MetricsSummaryDTO getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature);
     void addMetrics(MetricsDTO metricsDTO);
     List<MetricsDTO> getMetricsLogs(String id, int limit);
 }

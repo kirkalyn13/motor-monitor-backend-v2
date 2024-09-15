@@ -1,6 +1,6 @@
 package com.engrkirky.motormonitorv2.dto;
 
-public record MetricStatusDTO (
+public record MetricStatusDTO(
         double value,
         String status
 ) {}

@@ -1,9 +1,11 @@
 package com.engrkirky.motormonitorv2.service;
 
-import com.engrkirky.motormonitorv2.DateTimeUtil;
+import com.engrkirky.motormonitorv2.util.DateTimeUtil;
 import com.engrkirky.motormonitorv2.dto.*;
 import com.engrkirky.motormonitorv2.mapper.*;
 import com.engrkirky.motormonitorv2.repository.MetricsRepository;
+import com.engrkirky.motormonitorv2.util.Severities;
+import com.engrkirky.motormonitorv2.util.StatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +52,34 @@ public class MetricsServiceImpl implements MetricsService {
     }
 
     @Override
-    public List<Integer> getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
-        return List.of(1,2,3);
+    public MetricsSummaryDTO getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
+        LatestMetricsDTO latestMetrics = latestMetrcisMapper.convertToLatestMetricsDTO(metricsRepository.findLatestMetrics(id));
+
+        List<Severities> metricsStatus = List.of(
+                StatusUtil.getVoltageStatus(latestMetrics.line1Voltage().value(), ratedVoltage),
+                StatusUtil.getVoltageStatus(latestMetrics.line2Voltage().value(), ratedVoltage),
+                StatusUtil.getVoltageStatus(latestMetrics.line3Voltage().value(), ratedVoltage),
+                StatusUtil.getVoltageStatus(latestMetrics.line1Current().value(), ratedCurrent),
+                StatusUtil.getVoltageStatus(latestMetrics.line2Current().value(), ratedCurrent),
+                StatusUtil.getVoltageStatus(latestMetrics.line3Current().value(), ratedCurrent),
+                StatusUtil.getVoltageStatus(latestMetrics.temperature().value(), maxTemperature)
+        );
+
+        int normalCount = 0, warningCount = 0, criticalCount = 0;
+        for (Severities status : metricsStatus) {
+            if (status.equals(Severities.NORMAL)) {
+                normalCount++;
+                continue;
+            }
+            if (status.equals(Severities.WARNING)) {
+                warningCount++;
+                continue;
+            }
+            criticalCount++;
+        }
+
+        int[] tally = {normalCount, warningCount, criticalCount};
+        return new MetricsSummaryDTO(tally);
     }
 
     @Override

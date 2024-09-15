@@ -1,4 +1,4 @@
-package com.engrkirky.motormonitorv2;
+package com.engrkirky.motormonitorv2.util;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
