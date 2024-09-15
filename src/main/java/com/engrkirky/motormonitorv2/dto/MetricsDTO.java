@@ -1,7 +1,6 @@
 package com.engrkirky.motormonitorv2.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public record MetricsDTO(
         Long id,

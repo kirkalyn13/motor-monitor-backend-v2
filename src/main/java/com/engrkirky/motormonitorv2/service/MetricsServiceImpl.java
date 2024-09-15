@@ -27,7 +27,11 @@ public class MetricsServiceImpl implements MetricsService {
 
     @Override
     public LatestMetricsDTO getLatestMetrics(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
-        return latestMetrcisMapper.convertToLatestMetricsDTO(metricsRepository.findLatestMetrics(id));
+        return latestMetrcisMapper
+                .convertToLatestMetricsDTO(metricsRepository.findLatestMetrics(id),
+                        ratedVoltage,
+                        ratedCurrent,
+                        maxTemperature);
     }
 
     @Override
@@ -53,7 +57,12 @@ public class MetricsServiceImpl implements MetricsService {
 
     @Override
     public MetricsSummaryDTO getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
-        LatestMetricsDTO latestMetrics = latestMetrcisMapper.convertToLatestMetricsDTO(metricsRepository.findLatestMetrics(id));
+        LatestMetricsDTO latestMetrics = latestMetrcisMapper
+                .convertToLatestMetricsDTO(
+                        metricsRepository.findLatestMetrics(id),
+                        ratedVoltage,
+                        ratedCurrent,
+                        maxTemperature);
 
         List<Severities> metricsStatus = List.of(
                 StatusUtil.getVoltageStatus(latestMetrics.line1Voltage().value(), ratedVoltage),
@@ -83,8 +92,9 @@ public class MetricsServiceImpl implements MetricsService {
     }
 
     @Override
-    public void addMetrics(MetricsDTO metricsDTO) {
+    public String addMetrics(String motorID, MetricsDTO metricsDTO) {
         metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
+        return motorID;
     }
 
     @Override
