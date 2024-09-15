@@ -4,7 +4,9 @@ import com.engrkirky.motormonitorv2.dto.LatestMetricsDTO;
 import com.engrkirky.motormonitorv2.dto.MetricStatusDTO;
 import com.engrkirky.motormonitorv2.model.Metrics;
 import com.engrkirky.motormonitorv2.util.StatusUtil;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LatestMetricsMapperImpl implements LatestMetrcisMapper {
     @Override
     public LatestMetricsDTO convertToLatestMetricsDTO(Metrics metrics, double ratedVoltage, double ratedCurrent, double maxTemperature) {

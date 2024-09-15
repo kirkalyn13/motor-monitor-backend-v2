@@ -1,6 +1,6 @@
 package com.engrkirky.motormonitorv2.dto;
 
 public record MetricsSummaryDTO(
-        int[] Summary
+        int[] summary
 ) {
 }
