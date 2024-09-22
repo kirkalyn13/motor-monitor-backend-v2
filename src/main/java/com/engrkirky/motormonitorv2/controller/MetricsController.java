@@ -1,8 +1,6 @@
 package com.engrkirky.motormonitorv2.controller;
 
-import com.engrkirky.motormonitorv2.dto.LatestMetricsDTO;
-import com.engrkirky.motormonitorv2.dto.MetricsDTO;
-import com.engrkirky.motormonitorv2.dto.MetricsSummaryDTO;
+import com.engrkirky.motormonitorv2.dto.*;
 import com.engrkirky.motormonitorv2.service.MetricsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +41,34 @@ public class MetricsController {
         MetricsSummaryDTO result = metricsService.getMetricsSummary(id, ratedVoltage, ratedCurrent,maxTemperature);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/voltage/{id}")
+    public ResponseEntity<List<VoltageDTO>> getVoltageTrend(
+            @PathVariable("id") String id,
+            @RequestParam("period") int limit
+    ) {
+        List<VoltageDTO> results = metricsService.getVoltageTrend(id, limit);
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    @GetMapping("/current/{id}")
+    public ResponseEntity<List<CurrentDTO>> getCurrentTrend(
+            @PathVariable("id") String id,
+            @RequestParam("period") int limit
+    ) {
+        List<CurrentDTO> results = metricsService.getCurrentTrend(id, limit);
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    @GetMapping("/temperature/{id}")
+    public ResponseEntity<List<TemperatureDTO>> getTemperatureTrend(
+            @PathVariable("id") String id,
+            @RequestParam("period") int limit
+    ) {
+        List<TemperatureDTO> results = metricsService.getTemperatureTrend(id, limit);
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
 
     @PostMapping("/{id}")
     public ResponseEntity<String> addMetrics(
