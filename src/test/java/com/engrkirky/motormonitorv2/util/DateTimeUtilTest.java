@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DateTimeUtilTest {
     @Test
-    void testGetTimeRange() {
+    void shouldGetTimeRange() {
         int minutes = 30;
-        
+
         LocalDateTime[] timeRange = DateTimeUtil.getTimeRange(minutes);
         LocalDateTime startTime = timeRange[0];
         LocalDateTime endTime = timeRange[1];
