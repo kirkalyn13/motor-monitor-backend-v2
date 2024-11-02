@@ -79,7 +79,10 @@ public class MetricsController {
             @RequestParam("line1Current") double line1Current,
             @RequestParam("line2Current") double line2Current,
             @RequestParam("line3Current") double line3Current,
-            @RequestParam("temperature") double temperature
+            @RequestParam("temperature") double temperature,
+            @RequestParam("ratedVoltage") double ratedVoltage,
+            @RequestParam("ratedCurrent") double ratedCurrent,
+            @RequestParam("maxTemperature") double maxTemperature
     ) {
         MetricsDTO newMetrics = new MetricsDTO(
                 null,
@@ -93,7 +96,7 @@ public class MetricsController {
                 line3Current,
                 temperature
                 );
-        String result = metricsService.addMetrics(motorID, newMetrics);
+        String result = metricsService.addMetrics(motorID, newMetrics, ratedVoltage, ratedCurrent, maxTemperature);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
