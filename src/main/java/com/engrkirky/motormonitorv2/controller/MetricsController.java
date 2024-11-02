@@ -106,4 +106,16 @@ public class MetricsController {
 
         return new ResponseEntity<>(results,HttpStatus.OK);
     }
+
+    @GetMapping("/alarms/{id}")
+    public ResponseEntity<List<AlarmDTO>> getAlarms(
+            @PathVariable("id") String id,
+            @RequestParam("ratedVoltage") double ratedVoltage,
+            @RequestParam("ratedCurrent") double ratedCurrent,
+            @RequestParam("maxTemperature") double maxTemperature
+        ) {
+        List<AlarmDTO> results = metricsService.getAlarms(id, ratedVoltage, ratedCurrent, maxTemperature);
+
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
 }
