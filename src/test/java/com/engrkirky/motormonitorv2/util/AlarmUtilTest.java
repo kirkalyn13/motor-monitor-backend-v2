@@ -114,11 +114,12 @@ class AlarmUtilTest {
     @Test
     void shouldCheckNullReadings() {
         LocalDateTime timestamp = LocalDateTime.now();
+        String id = "1137";
         double[] voltages = {0, 220, 0};
         double[] currents = {0, 100, 0};
         double temperature = 0;
 
-        List<AlarmDTO> alarms = AlarmUtil.checkNullReadings(timestamp, voltages, currents, temperature);
+        List<AlarmDTO> alarms = AlarmUtil.checkNullReadings(timestamp, id, voltages, currents, temperature);
 
         // Expected null reading alarms
         assertEquals(5, alarms.size());
