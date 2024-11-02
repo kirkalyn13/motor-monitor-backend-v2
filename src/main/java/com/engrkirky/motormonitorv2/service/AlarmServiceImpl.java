@@ -42,117 +42,116 @@ public class AlarmServiceImpl implements AlarmService {
         List<AlarmDTO> alarms = new ArrayList<>();
 
         Severities severity = AlarmUtil.checkOverVoltage(metricsDTO.line1Voltage(), ratedVoltage);
-        AlarmDTO alarmDTO;
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 Over Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 Over Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkOverVoltage(metricsDTO.line2Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 Over Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 Over Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkOverVoltage(metricsDTO.line3Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 Over Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 Over Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkUnderVoltage(metricsDTO.line1Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 Under Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 Under Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkUnderVoltage(metricsDTO.line2Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 Under Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 Under Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkUnderVoltage(metricsDTO.line3Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 Under Voltage", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 Under Voltage", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkNoPower(metricsDTO.line1Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 No Power", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 1 No Power", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkNoPower(metricsDTO.line2Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 No Power", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 2 No Power", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkNoPower(metricsDTO.line3Voltage(), ratedVoltage);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 No Power", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Phase 3 No Power", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkShortCircuit(metricsDTO.line1Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Short Circuit", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Short Circuit", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkShortCircuit(metricsDTO.line2Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Short Circuit", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Short Circuit", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkShortCircuit(metricsDTO.line3Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Short Circuit", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Short Circuit", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkCurrentOverload(metricsDTO.line1Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Current Overload", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Current Overload", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkCurrentOverload(metricsDTO.line2Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Current Overload", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Current Overload", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkCurrentOverload(metricsDTO.line3Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Current Overload", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Current Overload", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkPhaseLoss(metricsDTO.line1Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Phase Loss", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 1 Phase Loss", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkPhaseLoss(metricsDTO.line2Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Phase Loss", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 2 Phase Loss", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkPhaseLoss(metricsDTO.line3Current(), ratedCurrent);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Phase Loss", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Line 3 Phase Loss", severity);
             alarms.add(alarmDTO);
         }
 
         severity = AlarmUtil.checkTemperature(metricsDTO.temperature(), maxTemperature);
         if (hasAlarm(severity)) {
-            alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Motor Overheating", severity);
+            AlarmDTO alarmDTO = new AlarmDTO(metricsDTO.timestamp(), metricsDTO.motorID(), "Motor Overheating", severity);
             alarms.add(alarmDTO);
         }
 

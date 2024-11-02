@@ -96,9 +96,10 @@ public class MetricsServiceImpl implements MetricsService {
 
     @Override
     public String addMetrics(String motorID, MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature) {
+        metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
+
         List<AlarmDTO> alarms = alarmService.analyzeMetrics(metricsDTO, ratedVoltage, ratedCurrent, maxTemperature);
         alarmService.addAlarms(motorID, alarms);
-        metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
 
         return motorID;
     }
