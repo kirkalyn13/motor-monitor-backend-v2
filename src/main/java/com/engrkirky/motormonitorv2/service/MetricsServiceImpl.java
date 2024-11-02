@@ -1,9 +1,10 @@
 package com.engrkirky.motormonitorv2.service;
 
-import com.engrkirky.motormonitorv2.util.DateTimeUtil;
 import com.engrkirky.motormonitorv2.dto.*;
-import com.engrkirky.motormonitorv2.mapper.*;
+import com.engrkirky.motormonitorv2.mapper.LatestMetrcisMapper;
+import com.engrkirky.motormonitorv2.mapper.MetricsMapper;
 import com.engrkirky.motormonitorv2.repository.MetricsRepository;
+import com.engrkirky.motormonitorv2.util.DateTimeUtil;
 import com.engrkirky.motormonitorv2.util.Severities;
 import com.engrkirky.motormonitorv2.util.StatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ public class MetricsServiceImpl implements MetricsService {
     private final MetricsRepository metricsRepository;
     private final MetricsMapper metricsMapper;
     private final LatestMetrcisMapper latestMetrcisMapper;
+    private final AlarmService alarmService;
 
     @Autowired
-    public MetricsServiceImpl(MetricsRepository metricsRepository, MetricsMapper metricsMapper, LatestMetrcisMapper latestMetrcisMapper) {
+    public MetricsServiceImpl(MetricsRepository metricsRepository, MetricsMapper metricsMapper, LatestMetrcisMapper latestMetrcisMapper, AlarmService alarmService) {
         this.metricsRepository = metricsRepository;
         this.metricsMapper = metricsMapper;
         this.latestMetrcisMapper = latestMetrcisMapper;
+        this.alarmService = alarmService;
     }
 
     @Override
@@ -105,5 +108,12 @@ public class MetricsServiceImpl implements MetricsService {
                 .stream()
                 .map(metricsMapper::convertToDTO)
                 .toList();
+    }
+
+    @Override
+    public List<AlarmDTO> getAlarms(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
+        MetricsDTO metrics = metricsMapper.convertToDTO(metricsRepository.findLatestMetrics(id));
+
+        return alarmService.analyzeMetrics(metrics, ratedVoltage, ratedCurrent, maxTemperature);
     }
 }

@@ -12,4 +12,5 @@ public interface MetricsService {
     MetricsSummaryDTO getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature);
     String addMetrics(String motorID, MetricsDTO metricsDTO);
     List<MetricsDTO> getMetricsLogs(String id, int limit);
+    List<AlarmDTO> getAlarms(String id, double ratedVoltage, double ratedCurrent, double maxTemperature);
 }
