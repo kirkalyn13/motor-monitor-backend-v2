@@ -31,7 +31,7 @@ public class MetricsController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/summary/{id}")
+    @GetMapping("/{id}/summary")
     public ResponseEntity<MetricsSummaryDTO> getMetricsSummary(
             @PathVariable("id") String id,
             @RequestParam("ratedVoltage") double ratedVoltage,
@@ -42,7 +42,7 @@ public class MetricsController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/voltage/{id}")
+    @GetMapping("/{id}/voltage")
     public ResponseEntity<List<VoltageDTO>> getVoltageTrend(
             @PathVariable("id") String id,
             @RequestParam("period") int limit
@@ -51,7 +51,7 @@ public class MetricsController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @GetMapping("/current/{id}")
+    @GetMapping("/{id}/current")
     public ResponseEntity<List<CurrentDTO>> getCurrentTrend(
             @PathVariable("id") String id,
             @RequestParam("period") int limit
@@ -60,7 +60,7 @@ public class MetricsController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @GetMapping("/temperature/{id}")
+    @GetMapping("/{id}/temperature")
     public ResponseEntity<List<TemperatureDTO>> getTemperatureTrend(
             @PathVariable("id") String id,
             @RequestParam("period") int limit
@@ -97,7 +97,7 @@ public class MetricsController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @GetMapping("/download/{id}")
+    @GetMapping("/{id}/download")
     public ResponseEntity<List<MetricsDTO>> getMetricsLogs(
             @PathVariable("id") String id,
             @RequestParam("period") int limit
@@ -107,7 +107,7 @@ public class MetricsController {
         return new ResponseEntity<>(results,HttpStatus.OK);
     }
 
-    @GetMapping("/alarms/{id}")
+    @GetMapping("/{id}/alarms")
     public ResponseEntity<List<AlarmDTO>> getAlarms(
             @PathVariable("id") String id,
             @RequestParam("ratedVoltage") double ratedVoltage,
