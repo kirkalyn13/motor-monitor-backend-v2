@@ -6,5 +6,6 @@ import com.engrkirky.motormonitorv2.dto.MetricsDTO;
 import java.util.List;
 
 public interface AlarmService {
+    List<AlarmDTO> getAlarmsHistoryByMotorID(String id, int limit);
     List<AlarmDTO> analyzeMetrics(MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature);
 }

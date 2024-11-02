@@ -55,29 +55,29 @@ public class AlarmUtil {
         return Severities.NORMAL;
     }
 
-    public static List<AlarmDTO> checkNullReadings(LocalDateTime timestamp, double[] voltages, double[] currents, double temperature) {
+    public static List<AlarmDTO> checkNullReadings(LocalDateTime timestamp, String motorID, double[] voltages, double[] currents, double temperature) {
         List<AlarmDTO> alarms = new ArrayList<>();
 
         if (voltages[0] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Phase 1 Voltage", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Phase 1 Voltage", Severities.NULL));
         }
         if (voltages[1] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Phase 2 Voltage", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Phase 2 Voltage", Severities.NULL));
         }
         if (voltages[2] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Phase 3 Voltage", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Phase 3 Voltage", Severities.NULL));
         }
         if (currents[0] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Line 1 Current", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Line 1 Current", Severities.NULL));
         }
         if (currents[1] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Line 2 Current", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Line 2 Current", Severities.NULL));
         }
         if (currents[2] == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Line 3 Current", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Line 3 Current", Severities.NULL));
         }
         if (temperature == 0) {
-            alarms.add(new AlarmDTO(timestamp, "No Data for Temperature", Severities.NULL));
+            alarms.add(new AlarmDTO(timestamp, motorID,  "No Data for Temperature", Severities.NULL));
         }
 
         return alarms;
