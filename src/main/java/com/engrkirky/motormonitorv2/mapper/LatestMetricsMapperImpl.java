@@ -14,12 +14,12 @@ public class LatestMetricsMapperImpl implements LatestMetrcisMapper {
                 metrics.getTimestamp(),
                 metrics.getMotorID(),
                 new MetricStatusDTO(metrics.getLine1Voltage(), StatusUtil.getVoltageStatus(metrics.getLine1Voltage(), ratedVoltage)),
-                new MetricStatusDTO(metrics.getLine1Voltage(), StatusUtil.getVoltageStatus(metrics.getLine2Voltage(), ratedVoltage)),
-                new MetricStatusDTO(metrics.getLine1Voltage(), StatusUtil.getVoltageStatus(metrics.getLine3Voltage(), ratedVoltage)),
-                new MetricStatusDTO(metrics.getLine1Current(), StatusUtil.getVoltageStatus(metrics.getLine1Current(), ratedCurrent)),
-                new MetricStatusDTO(metrics.getLine2Current(), StatusUtil.getVoltageStatus(metrics.getLine2Current(), ratedCurrent)),
-                new MetricStatusDTO(metrics.getLine3Current(), StatusUtil.getVoltageStatus(metrics.getLine3Current(), ratedCurrent)),
-                new MetricStatusDTO(metrics.getTemperature(), StatusUtil.getVoltageStatus(metrics.getTemperature(), ratedCurrent))
+                new MetricStatusDTO(metrics.getLine2Voltage(), StatusUtil.getVoltageStatus(metrics.getLine2Voltage(), ratedVoltage)),
+                new MetricStatusDTO(metrics.getLine3Voltage(), StatusUtil.getVoltageStatus(metrics.getLine3Voltage(), ratedVoltage)),
+                new MetricStatusDTO(metrics.getLine1Current(), StatusUtil.getCurrentStatus(metrics.getLine1Current(), ratedCurrent)),
+                new MetricStatusDTO(metrics.getLine2Current(), StatusUtil.getCurrentStatus(metrics.getLine2Current(), ratedCurrent)),
+                new MetricStatusDTO(metrics.getLine3Current(), StatusUtil.getCurrentStatus(metrics.getLine3Current(), ratedCurrent)),
+                new MetricStatusDTO(metrics.getTemperature(), StatusUtil.getTemperatureStatus(metrics.getTemperature(), maxTemperature))
         );
     }
 }
