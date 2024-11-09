@@ -11,10 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MetricsMapperImplTest {
     private MetricsMapperImpl underTest;
-    LocalDateTime now = LocalDateTime.now();
+    private LocalDateTime now;
 
     @BeforeEach
     void setUp() {
+        this.now = LocalDateTime.now();
         this.underTest = new MetricsMapperImpl();
     }
 
