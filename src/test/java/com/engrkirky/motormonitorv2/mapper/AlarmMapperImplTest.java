@@ -12,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlarmMapperImplTest {
     private AlarmMapperImpl underTest;
-    LocalDateTime now = LocalDateTime.now();
+    private LocalDateTime now;
 
     @BeforeEach
     void setUp() {
+        this.now = LocalDateTime.now();
         underTest = new AlarmMapperImpl();
     }
 

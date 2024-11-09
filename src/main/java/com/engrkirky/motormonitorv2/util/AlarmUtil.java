@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmUtil {
-
-    private static final double PHASE_LOSS_TOLERANCE = 0.2;
-
     public static Severities checkOverVoltage(double voltage, double threshold) {
         if (voltage >= (1.15 * threshold)) return Severities.CRITICAL;
         if (voltage >= (1.1 * threshold)) return Severities.WARNING;
