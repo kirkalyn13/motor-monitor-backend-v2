@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LatestMetricsMapperImplTest {
     private LatestMetricsMapperImpl underTest;
-    private LocalDateTime now;
+    private final LocalDateTime now = LocalDateTime.now();
+    private final String motorId = "1137";
 
     @BeforeEach
     void setUp() {
-        this.now = LocalDateTime.now();
         this.underTest = new LatestMetricsMapperImpl();
     }
 
     LatestMetricsDTO dto = new LatestMetricsDTO(
             now,
-            "1137",
+            motorId,
             new MetricStatusDTO(228, Severities.NORMAL),
             new MetricStatusDTO(229, Severities.NORMAL),
             new MetricStatusDTO(230, Severities.NORMAL),
@@ -35,7 +35,7 @@ public class LatestMetricsMapperImplTest {
 
     Metrics metrics = Metrics.builder()
             .timestamp(now)
-            .motorID("1137")
+            .motorID(motorId)
             .line1Voltage(228)
             .line2Voltage(229)
             .line3Voltage(230)

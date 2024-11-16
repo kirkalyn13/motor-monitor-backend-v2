@@ -12,19 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlarmMapperImplTest {
     private AlarmMapperImpl underTest;
-    private LocalDateTime now;
+    private final LocalDateTime now = LocalDateTime.now();
+    private final String motorId = "1137";
 
     @BeforeEach
     void setUp() {
-        this.now = LocalDateTime.now();
         underTest = new AlarmMapperImpl();
     }
 
-    AlarmDTO dto = new AlarmDTO(now, "1137", "Motor Alarm", Severities.CRITICAL);
+    AlarmDTO dto = new AlarmDTO(now, motorId, "Motor Alarm", Severities.CRITICAL);
     Alarm entity = Alarm.builder()
             .id(1L)
             .timestamp(now)
-            .motorID("1137")
+            .motorID(motorId)
             .alarm("Motor Alarm")
             .severity(Severities.CRITICAL)
             .build();

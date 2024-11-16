@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MetricsMapperImplTest {
     private MetricsMapperImpl underTest;
-    private LocalDateTime now;
+    private final LocalDateTime now = LocalDateTime.now();
+    private final String motorId = "1137";
 
     @BeforeEach
     void setUp() {
-        this.now = LocalDateTime.now();
         this.underTest = new MetricsMapperImpl();
     }
 
     MetricsDTO dto = new MetricsDTO(
         1L,
             now,
-            "1137",
+            motorId,
             228,
             229,
             230,
@@ -35,7 +35,7 @@ public class MetricsMapperImplTest {
     Metrics entity = Metrics.builder()
             .id(1L)
             .timestamp(now)
-            .motorID("1137")
+            .motorID(motorId)
             .line1Voltage(228)
             .line2Voltage(229)
             .line3Voltage(230)
