@@ -1,4 +1,4 @@
-# Motor Monitor Backend
+# Motor Monitor Backend V2
 
 Revamped backend for the Induction Motor Monitoring System. 
 
@@ -6,7 +6,7 @@ To view sensor readings and analysis, visit the [web app](https://motor-monitor-
 
 ## Tech Stack
 
-**Server:** Java, Spring Boot, PostgreSQL, Spring Web, Java Mail Sender, Lombok
+**Server:** Java, Spring Boot, PostgreSQL, Spring Web, Lombok
 
 ## Deployment
 
