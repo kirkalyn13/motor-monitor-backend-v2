@@ -22,7 +22,7 @@ public class MetricsRepositoryTest {
     @Autowired
     private MetricsRepository underTest;
 
-    private final LocalDateTime now = LocalDateTime.now();;
+    private static final LocalDateTime now = LocalDateTime.now();;
     private static final String MOTOR_ID = "1137";
 
     @BeforeEach

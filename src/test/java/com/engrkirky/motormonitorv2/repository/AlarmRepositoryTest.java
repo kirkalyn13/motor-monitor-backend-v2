@@ -19,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AlarmRepositoryTest {
     @Autowired
     private AlarmRepository underTest;
-    private final LocalDateTime now = LocalDateTime.now();
-    private final String motorId = "1137";
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final String motorId = "1137";
 
     @BeforeEach
     void setUp() {

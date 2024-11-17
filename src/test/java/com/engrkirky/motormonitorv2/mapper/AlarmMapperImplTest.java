@@ -5,29 +5,30 @@ import com.engrkirky.motormonitorv2.model.Alarm;
 import com.engrkirky.motormonitorv2.util.Severities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlarmMapperImplTest {
+    @Autowired
     private AlarmMapperImpl underTest;
-    private final LocalDateTime now = LocalDateTime.now();
-    private final String motorId = "1137";
-
-    @BeforeEach
-    void setUp() {
-        underTest = new AlarmMapperImpl();
-    }
-
-    AlarmDTO dto = new AlarmDTO(now, motorId, "Motor Alarm", Severities.CRITICAL);
-    Alarm entity = Alarm.builder()
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final String motorId = "1137";
+    private static final AlarmDTO dto = new AlarmDTO(now, motorId, "Motor Alarm", Severities.CRITICAL);
+    private static final Alarm entity = Alarm.builder()
             .id(1L)
             .timestamp(now)
             .motorID(motorId)
             .alarm("Motor Alarm")
             .severity(Severities.CRITICAL)
             .build();
+
+    @BeforeEach
+    void setUp() {
+        underTest = new AlarmMapperImpl();
+    }
 
     @Test
     void shouldConvertToDTO() {

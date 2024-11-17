@@ -4,23 +4,19 @@ import com.engrkirky.motormonitorv2.dto.MetricsDTO;
 import com.engrkirky.motormonitorv2.model.Metrics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MetricsMapperImplTest {
+    @Autowired
     private MetricsMapperImpl underTest;
-    private final LocalDateTime now = LocalDateTime.now();
-    private final String motorId = "1137";
-
-    @BeforeEach
-    void setUp() {
-        this.underTest = new MetricsMapperImpl();
-    }
-
-    MetricsDTO dto = new MetricsDTO(
-        1L,
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final String motorId = "1137";
+    private static final MetricsDTO dto = new MetricsDTO(
+            1L,
             now,
             motorId,
             228,
@@ -32,7 +28,7 @@ public class MetricsMapperImplTest {
             28
     );
 
-    Metrics entity = Metrics.builder()
+    private static final Metrics entity = Metrics.builder()
             .id(1L)
             .timestamp(now)
             .motorID(motorId)
@@ -44,6 +40,10 @@ public class MetricsMapperImplTest {
             .line3Current(1.62)
             .temperature(28)
             .build();
+    @BeforeEach
+    void setUp() {
+        this.underTest = new MetricsMapperImpl();
+    }
 
     @Test
     void shouldConvertToDTO() {
