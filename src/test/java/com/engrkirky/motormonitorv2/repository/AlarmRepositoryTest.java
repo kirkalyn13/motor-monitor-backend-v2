@@ -19,13 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AlarmRepositoryTest {
     @Autowired
     private AlarmRepository underTest;
-    private LocalDateTime now;
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final String motorId = "1137";
 
     @BeforeEach
     void setUp() {
-        this.now = LocalDateTime.now();
-        String motorId = "1137";
-
         underTest.save(new Alarm(1L, now, motorId, "Phase 1 Over Voltage", Severities.CRITICAL)); // within range
         underTest.save(new Alarm(2L, now, motorId, "", Severities.CRITICAL)); // within range
         underTest.save(new Alarm(3L, now, "12345", "No Data for Phase 1 Voltage", Severities.CRITICAL)); // different motor ID
@@ -42,10 +40,10 @@ public class AlarmRepositoryTest {
         LocalDateTime start = LocalDateTime.now().minusDays(2);
         LocalDateTime end = LocalDateTime.now().plusDays(1);
 
-        List<Alarm> alarms = underTest.findAlarmHistoryByMotorID("1137", start, end);
+        List<Alarm> alarms = underTest.findAlarmHistoryByMotorID(motorId, start, end);
 
         assertThat(alarms).hasSize(3);
-        assertThat(alarms).allMatch(alarm -> alarm.getMotorID().equals("1137"));
+        assertThat(alarms).allMatch(alarm -> alarm.getMotorID().equals(motorId));
         assertThat(alarms).allMatch(alarm ->
                 !alarm.getTimestamp().isBefore(start) && !alarm.getTimestamp().isAfter(end)
         );

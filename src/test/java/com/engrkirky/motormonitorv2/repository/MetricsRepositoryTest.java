@@ -22,13 +22,11 @@ public class MetricsRepositoryTest {
     @Autowired
     private MetricsRepository underTest;
 
-    private LocalDateTime now;
-    private static final String MOTOR_ID = "motor123";
+    private static final LocalDateTime now = LocalDateTime.now();;
+    private static final String MOTOR_ID = "1137";
 
     @BeforeEach
     public void setUp() {
-        this.now = LocalDateTime.now();
-
         underTest.save(new Metrics(1L, now.minusDays(1), MOTOR_ID, 220.0, 220.5, 219.8, 10.0, 10.5, 10.3, 75.0));
         underTest.save(new Metrics(2L, now.minusHours(12), MOTOR_ID, 221.0, 220.7, 220.1, 10.1, 10.6, 10.4, 76.0));
         underTest.save(new Metrics(3L, now.minusHours(1), MOTOR_ID, 222.0, 220.9, 220.3, 10.2, 10.7, 10.5, 77.0));

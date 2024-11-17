@@ -6,24 +6,20 @@ import com.engrkirky.motormonitorv2.model.Metrics;
 import com.engrkirky.motormonitorv2.util.Severities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LatestMetricsMapperImplTest {
+    @Autowired
     private LatestMetricsMapperImpl underTest;
-    private LocalDateTime now;
-
-    @BeforeEach
-    void setUp() {
-        this.now = LocalDateTime.now();
-        this.underTest = new LatestMetricsMapperImpl();
-    }
-
-    LatestMetricsDTO dto = new LatestMetricsDTO(
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final String motorId = "1137";
+    private static final LatestMetricsDTO dto = new LatestMetricsDTO(
             now,
-            "1137",
+            motorId,
             new MetricStatusDTO(228, Severities.NORMAL),
             new MetricStatusDTO(229, Severities.NORMAL),
             new MetricStatusDTO(230, Severities.NORMAL),
@@ -33,9 +29,9 @@ public class LatestMetricsMapperImplTest {
             new MetricStatusDTO(27, Severities.NORMAL)
     );
 
-    Metrics metrics = Metrics.builder()
+    private static final Metrics metrics = Metrics.builder()
             .timestamp(now)
-            .motorID("1137")
+            .motorID(motorId)
             .line1Voltage(228)
             .line2Voltage(229)
             .line3Voltage(230)
@@ -44,6 +40,11 @@ public class LatestMetricsMapperImplTest {
             .line3Current(1.62)
             .temperature(27)
             .build();
+
+    @BeforeEach
+    void setUp() {
+        this.underTest = new LatestMetricsMapperImpl();
+    }
 
     @Test
     void shouldConvertToLatestMetricsDTO() {
