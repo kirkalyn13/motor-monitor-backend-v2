@@ -3,6 +3,7 @@ package com.engrkirky.motormonitorv2.service;
 import com.engrkirky.motormonitorv2.dto.*;
 import com.engrkirky.motormonitorv2.mapper.LatestMetrcisMapper;
 import com.engrkirky.motormonitorv2.mapper.MetricsMapper;
+import com.engrkirky.motormonitorv2.messaging.RabbitMQSender;
 import com.engrkirky.motormonitorv2.repository.MetricsRepository;
 import com.engrkirky.motormonitorv2.util.DateTimeUtil;
 import com.engrkirky.motormonitorv2.util.Severities;
@@ -19,13 +20,20 @@ public class MetricsServiceImpl implements MetricsService {
     private final MetricsMapper metricsMapper;
     private final LatestMetrcisMapper latestMetrcisMapper;
     private final AlarmService alarmService;
+    private final RabbitMQSender rabbitMQSender;
 
     @Autowired
-    public MetricsServiceImpl(MetricsRepository metricsRepository, MetricsMapper metricsMapper, LatestMetrcisMapper latestMetrcisMapper, AlarmService alarmService) {
+    public MetricsServiceImpl(
+            MetricsRepository metricsRepository,
+            MetricsMapper metricsMapper,
+            LatestMetrcisMapper latestMetrcisMapper,
+            AlarmService alarmService,
+            RabbitMQSender rabbitMQSender) {
         this.metricsRepository = metricsRepository;
         this.metricsMapper = metricsMapper;
         this.latestMetrcisMapper = latestMetrcisMapper;
         this.alarmService = alarmService;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     @Override
@@ -99,7 +107,10 @@ public class MetricsServiceImpl implements MetricsService {
         metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
 
         List<AlarmDTO> alarms = alarmService.analyzeMetrics(metricsDTO, ratedVoltage, ratedCurrent, maxTemperature);
-        alarmService.addAlarms(motorID, alarms);
+        if (alarms.size() > 0) {
+            alarmService.addAlarms(motorID, alarms);
+            rabbitMQSender.sendMessage(alarms);
+        }
 
         return motorID;
     }

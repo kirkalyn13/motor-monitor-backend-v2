@@ -6,7 +6,7 @@ To view sensor readings and analysis, visit the [web app](https://motor-monitor-
 
 ## Tech Stack
 
-**Server:** Java, Spring Boot, PostgreSQL, Spring Web, Lombok
+**Server:** Java, Spring Boot, PostgreSQL, Spring Web, RabbitMQ, Lombok
 
 ## Deployment
 
