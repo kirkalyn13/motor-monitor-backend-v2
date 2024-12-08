@@ -3,6 +3,7 @@ package com.engrkirky.motormonitorv2.service;
 import com.engrkirky.motormonitorv2.dto.*;
 import com.engrkirky.motormonitorv2.mapper.LatestMetrcisMapper;
 import com.engrkirky.motormonitorv2.mapper.MetricsMapper;
+import com.engrkirky.motormonitorv2.messaging.RabbitMQSender;
 import com.engrkirky.motormonitorv2.model.Metrics;
 import com.engrkirky.motormonitorv2.repository.MetricsRepository;
 import com.engrkirky.motormonitorv2.util.Severities;
@@ -27,6 +28,8 @@ public class MetricsServiceImplTest {
     @Mock private MetricsMapper metricsMapper;
     @Mock private LatestMetrcisMapper latestMetrcisMapper;
     @Mock private AlarmService alarmService;
+    @Mock private RabbitMQSender rabbitMQSender;
+
     @InjectMocks private MetricsServiceImpl underTest;
     private static final LocalDateTime now = LocalDateTime.now();
     private static final String motorId = "1137";
@@ -77,7 +80,7 @@ public class MetricsServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new MetricsServiceImpl(metricsRepository, metricsMapper, latestMetrcisMapper, alarmService);
+        underTest = new MetricsServiceImpl(metricsRepository, metricsMapper, latestMetrcisMapper, alarmService, rabbitMQSender);
     }
 
     @Test
