@@ -10,14 +10,14 @@ Revamped backend for the [Motor Monitor](https://motor-monitor-frontend.vercel.a
 - **Utilities:** Lombok, Spring Web
 - 
 ## Data Flow
-
+```mermaid
 flowchart LR
     A[🎛️ Monitoring Device] --> B[Spring Boot\nProducer]
     B --> C[RabbitMQ\nExchange]
     C --> D[Spring Boot\nListener]
     D --> E[(PostgreSQL)]
     E --> F[📉 React Dashboard]
-
+```
 
 ## Running Locally
 
