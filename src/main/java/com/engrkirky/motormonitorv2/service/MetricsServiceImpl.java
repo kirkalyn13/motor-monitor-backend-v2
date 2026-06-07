@@ -103,15 +103,19 @@ public class MetricsServiceImpl implements MetricsService {
     }
 
     @Override
-    public String addMetrics(String motorID, MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature) {
-//        metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
+    public String publishMetrics(String motorID, MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         rabbitMQSender.sendMetricsMessage(metricsDTO);
         List<AlarmDTO> alarms = alarmService.analyzeMetrics(metricsDTO, ratedVoltage, ratedCurrent, maxTemperature);
-        if (alarms.size() > 0) {
-//            alarmService.addAlarms(motorID, alarms);
+        if (!alarms.isEmpty()) {
             rabbitMQSender.sendAlarmMessage(alarms);
         }
 
+        return motorID;
+    }
+
+    @Override
+    public String addMetrics(String motorID, MetricsDTO metricsDTO) {
+        metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
         return motorID;
     }
 

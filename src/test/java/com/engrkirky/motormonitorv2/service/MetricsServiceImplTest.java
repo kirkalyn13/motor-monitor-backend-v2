@@ -137,13 +137,10 @@ public class MetricsServiceImplTest {
         List<AlarmDTO> alarms = List.of(alarmDTO);
 
         when(metricsMapper.convertToEntity(metricsDTO)).thenReturn(metrics);
-        when(alarmService.analyzeMetrics(metricsDTO, ratedVoltage, ratedCurrent, maxTemperature)).thenReturn(alarms);
-
-        String result = underTest.addMetrics(motorId, metricsDTO, ratedVoltage, ratedCurrent, maxTemperature);
+        String result = underTest.addMetrics(motorId, metricsDTO);
 
         verify(metricsRepository).save(metrics);
-        verify(alarmService).addAlarms(motorId, alarms);
-        assertEquals(result, motorId);
+        assertEquals(motorId, result);
     }
 
     @Test

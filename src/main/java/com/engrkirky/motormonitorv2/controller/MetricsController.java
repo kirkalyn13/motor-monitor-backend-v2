@@ -96,7 +96,7 @@ public class MetricsController {
                 line3Current,
                 temperature
                 );
-        String result = metricsService.addMetrics(motorID, newMetrics, ratedVoltage, ratedCurrent, maxTemperature);
+        String result = metricsService.publishMetrics(motorID, newMetrics, ratedVoltage, ratedCurrent, maxTemperature);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
