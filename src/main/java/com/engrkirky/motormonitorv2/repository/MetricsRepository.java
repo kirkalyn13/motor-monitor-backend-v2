@@ -12,14 +12,31 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Repository for managing motor metrics.
+ */
 @Repository
 public interface MetricsRepository extends JpaRepository<Metrics, Long> {
+    /**
+     * Retrieves the latest metrics for a motor.
+     *
+     * @param id motor identifier
+     * @return latest metrics
+     */
     @Query("SELECT m FROM Metrics m " +
             "WHERE m.motorID = :id " +
             "ORDER BY m.timestamp " +
             "DESC LIMIT 1")
     Metrics findLatestMetrics(@Param("id") String id);
 
+    /**
+     * Retrieves voltage trend data.
+     *
+     * @param id motor identifier
+     * @param start start timestamp
+     * @param end end timestamp
+     * @return voltage trend data
+     */
     @Query("SELECT new com.engrkirky.motormonitorv2.dto.VoltageDTO(m.timestamp, m.line1Voltage, m.line2Voltage, m.line3Voltage) " +
             "FROM Metrics m " +
             "WHERE m.motorID = :id " +
@@ -27,6 +44,14 @@ public interface MetricsRepository extends JpaRepository<Metrics, Long> {
             "ORDER BY m.timestamp DESC")
     List<VoltageDTO> findVoltageTrend(@Param("id") String id, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    /**
+     * Retrieves current trend data.
+     *
+     * @param id motor identifier
+     * @param start start timestamp
+     * @param end end timestamp
+     * @return current trend data
+     */
     @Query("SELECT new com.engrkirky.motormonitorv2.dto.CurrentDTO(m.timestamp, m.line1Current, m.line2Current, m.line3Current) " +
             "FROM Metrics m "+
             "WHERE m.motorID = :id " +
@@ -34,6 +59,14 @@ public interface MetricsRepository extends JpaRepository<Metrics, Long> {
             "ORDER BY m.timestamp DESC")
     List<CurrentDTO> findCurrentTrend(@Param("id") String id, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    /**
+     * Retrieves temperature trend data.
+     *
+     * @param id motor identifier
+     * @param start start timestamp
+     * @param end end timestamp
+     * @return temperature trend data
+     */
     @Query("SELECT new com.engrkirky.motormonitorv2.dto.TemperatureDTO(m.timestamp, m.temperature) "+
             "FROM Metrics m " +
             "WHERE m.motorID = :id " +
@@ -41,6 +74,14 @@ public interface MetricsRepository extends JpaRepository<Metrics, Long> {
             "ORDER BY m.timestamp DESC")
     List<TemperatureDTO> findTemperatureTrend(@Param("id") String id, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    /**
+     * Retrieves metrics logs within a time range.
+     *
+     * @param id motor identifier
+     * @param start start timestamp
+     * @param end end timestamp
+     * @return list of metrics records
+     */
     @Query("SELECT m " +
             "FROM Metrics m " +
             "WHERE m.motorID = :id " +
