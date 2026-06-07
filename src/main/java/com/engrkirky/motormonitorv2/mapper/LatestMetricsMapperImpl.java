@@ -6,8 +6,20 @@ import com.engrkirky.motormonitorv2.model.Metrics;
 import com.engrkirky.motormonitorv2.util.StatusUtil;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper implementation for LatestMetricsDTO conversion.
+ */
 @Component
 public class LatestMetricsMapperImpl implements LatestMetrcisMapper {
+    /**
+     * Converts Metrics into LatestMetricsDTO with computed status values.
+     *
+     * @param metrics source metrics entity
+     * @param ratedVoltage rated voltage threshold
+     * @param ratedCurrent rated current threshold
+     * @param maxTemperature maximum temperature threshold
+     * @return enriched latest metrics DTO
+     */
     @Override
     public LatestMetricsDTO convertToLatestMetricsDTO(Metrics metrics, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         return new LatestMetricsDTO(

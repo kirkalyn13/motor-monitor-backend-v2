@@ -1,30 +1,41 @@
 # Motor Monitor Backend V2
 
-Revamped backend for the Induction Motor Monitoring System. 
-
-To view sensor readings and analysis, visit the [web app](https://motor-monitor-frontend.vercel.app/).
+Revamped backend for the [Motor Monitor](https://motor-monitor-frontend.vercel.app/) induction motor monitoring system. Handles sensor data ingestion, alarm detection, and real-time metrics processing via a message-driven architecture.
 
 ## Tech Stack
 
-**Server:** Java, Spring Boot, PostgreSQL, Spring Web, RabbitMQ, Lombok
+- **Runtime:** Java 17, Spring Boot
+- **Database:** PostgreSQL
+- **Messaging:** RabbitMQ
+- **Utilities:** Lombok, Spring Web
+- 
+## Data Flow
 
-## Deployment
+flowchart LR
+    A[🎛️ Monitoring Device] --> B[Spring Boot\nProducer]
+    B --> C[RabbitMQ\nExchange]
+    C --> D[Spring Boot\nListener]
+    D --> E[(PostgreSQL)]
+    E --> F[📉 React Dashboard]
 
-To deploy, go to the root directory of the project which contains the `docker-compose.yaml` file, then run:
+
+## Running Locally
+
+Ensure Docker is running, then from the project root:
 
 ```bash
-  docker compose up
+docker compose up
 ```
 
+This starts the app, PostgreSQL, and RabbitMQ together.
 
 ## API Reference
 
-When running the application, visit the [Swagger Docs](http://localhost:8080/swagger-ui/index.html) to see the API documentation.
+With the app running, visit the [Swagger UI](http://localhost:8080/swagger-ui/index.html) for full API documentation.
 
+## Author
 
-## Authors
-
-- [Engr. Kirk Alyn Santos](https://github.com/kirkalyn13)
+[Engr. Kirk Alyn Santos](https://github.com/kirkalyn13)
 
 ## License
 

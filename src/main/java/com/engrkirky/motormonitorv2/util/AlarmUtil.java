@@ -6,7 +6,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for evaluating motor alarm conditions.
+ */
 public class AlarmUtil {
+    /**
+     * Checks for overvoltage conditions.
+     *
+     * @param voltage measured voltage
+     * @param threshold voltage threshold
+     * @return alarm severity
+     */
     public static Severities checkOverVoltage(double voltage, double threshold) {
         if (voltage >= (1.15 * threshold)) return Severities.CRITICAL;
         if (voltage >= (1.1 * threshold)) return Severities.WARNING;
@@ -14,6 +24,13 @@ public class AlarmUtil {
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for undervoltage conditions.
+     *
+     * @param voltage measured voltage
+     * @param threshold voltage threshold
+     * @return alarm severity
+     */
     public static Severities checkUnderVoltage(double voltage, double threshold) {
         if (voltage <= (0.85 * threshold) && voltage > (0.1 * threshold)) return Severities.CRITICAL;
         if (voltage <= (0.9 * threshold) && voltage > (0.1 * threshold)) return Severities.WARNING;
@@ -21,30 +38,65 @@ public class AlarmUtil {
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for no-power conditions.
+     *
+     * @param voltage measured voltage
+     * @param threshold voltage threshold
+     * @return alarm severity
+     */
     public static Severities checkNoPower(double voltage, double threshold) {
         if (voltage <= (0.1 * threshold)) return Severities.CRITICAL;
 
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for short-circuit conditions.
+     *
+     * @param current measured current
+     * @param threshold current threshold
+     * @return alarm severity
+     */
     public static Severities checkShortCircuit(double current, double threshold) {
         if (current >= (threshold * 4)) return Severities.CRITICAL;
 
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for current overload conditions.
+     *
+     * @param current measured current
+     * @param threshold current threshold
+     * @return alarm severity
+     */
     public static Severities checkCurrentOverload(double current, double threshold) {
         if (current >= (1.25 * threshold) && current < (1.5 * threshold)) return Severities.CRITICAL;
 
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for phase loss conditions.
+     *
+     * @param current measured current
+     * @param threshold current threshold
+     * @return alarm severity
+     */
     public static Severities checkPhaseLoss(double current, double threshold) {
         if (current >= (1.5 * threshold)) return Severities.CRITICAL;
 
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for temperature alarms.
+     *
+     * @param temperature measured temperature
+     * @param threshold temperature threshold
+     * @return alarm severity
+     */
     public static Severities checkTemperature(double temperature, double threshold) {
         if (temperature >= threshold) return Severities.CRITICAL;
         if (temperature >= (0.9 * threshold)) return Severities.WARNING;
@@ -52,6 +104,16 @@ public class AlarmUtil {
         return Severities.NORMAL;
     }
 
+    /**
+     * Checks for missing sensor readings.
+     *
+     * @param timestamp reading timestamp
+     * @param motorID motor identifier
+     * @param voltages voltage readings
+     * @param currents current readings
+     * @param temperature temperature reading
+     * @return list of generated alarms
+     */
     public static List<AlarmDTO> checkNullReadings(LocalDateTime timestamp, String motorID, double[] voltages, double[] currents, double temperature) {
         List<AlarmDTO> alarms = new ArrayList<>();
 

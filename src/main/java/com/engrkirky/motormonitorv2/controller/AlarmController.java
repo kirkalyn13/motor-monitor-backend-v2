@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for alarm-related operations.
+ */
 @RestController
 @RequestMapping("/api/v2/alarms")
 public class AlarmController {
@@ -19,6 +22,13 @@ public class AlarmController {
         this.alarmService = alarmService;
     }
 
+    /**
+     * Retrieves alarm history for a motor.
+     *
+     * @param id motor identifier
+     * @param limit number of records to retrieve
+     * @return list of alarms
+     */
     @GetMapping("/{id}")
     public ResponseEntity<List<AlarmDTO>> getAlarmsHistoryByID(
             @PathVariable("id") String id,

@@ -9,8 +9,19 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Repository for managing alarm records.
+ */
 @Repository
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
+    /**
+     * Retrieves alarm history for a motor within a time range.
+     *
+     * @param id motor identifier
+     * @param start start timestamp
+     * @param end end timestamp
+     * @return list of alarms
+     */
     @Query("SELECT a " +
             "FROM Alarm a " +
             "WHERE a.motorID = :id " +

@@ -6,10 +6,19 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * OpenAPI and Swagger configuration.
+ */
 @Configuration
 public class SwaggerConfig {
     private static final String TITLE = "Motor Monitor API";
     private static final String VERSION = "Version 2.0";
+
+    /**
+     * Creates the public API group.
+     *
+     * @return grouped OpenAPI configuration
+     */
     @Bean
     GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
@@ -18,6 +27,11 @@ public class SwaggerConfig {
                 .build();
     }
 
+    /**
+     * Creates the OpenAPI documentation configuration.
+     *
+     * @return OpenAPI configuration
+     */
     @Bean
     OpenAPI customOpenAPI() {
         return new OpenAPI()

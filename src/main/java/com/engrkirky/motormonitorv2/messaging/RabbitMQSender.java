@@ -9,6 +9,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for publishing messages to RabbitMQ.
+ */
 @Service
 public class RabbitMQSender {
     private static final Logger log = LoggerFactory.getLogger(RabbitMQSender.class);
@@ -21,13 +24,39 @@ public class RabbitMQSender {
         this.objectMapper = objectMapper;
     }
 
-    public void sendMessage(Object messageObject) {
+    /**
+     * Sends a metrics message.
+     *
+     * @param messageObject message payload
+     */
+    public void sendMetricsMessage(Object messageObject) {
         try {
             String message = objectMapper.writeValueAsString(messageObject);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, message);
-            log.info("Message sent: " + message);
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE_NAME,
+                    RabbitMQConfig.METRICS_ROUTING_KEY,
+                    message);
+            log.info("Metrics message sent: " + message);
         } catch (JsonProcessingException e) {
-            log.error("Error occurred while sending message: {}", e.getMessage());
+            log.error("Error occurred while sending metrics message: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Sends an alarm message.
+     *
+     * @param messageObject message payload
+     */
+    public void sendAlarmMessage(Object messageObject) {
+        try {
+            String message = objectMapper.writeValueAsString(messageObject);
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE_NAME,
+                    RabbitMQConfig.ALARMS_ROUTING_KEY,
+                    message);
+            log.info("Alarm message sent: " + message);
+        } catch (JsonProcessingException e) {
+            log.error("Error occurred while sending alarm message: {}", e.getMessage());
         }
     }
 }

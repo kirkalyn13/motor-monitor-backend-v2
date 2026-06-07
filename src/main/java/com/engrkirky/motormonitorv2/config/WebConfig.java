@@ -6,6 +6,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Web MVC configuration.
+ */
 @EnableWebMvc
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -15,6 +18,11 @@ public class WebConfig implements WebMvcConfigurer {
             "motor-monitor-arduino/1.0"
     };
 
+    /**
+     * Configures CORS settings for API endpoints.
+     *
+     * @return web MVC configuration
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

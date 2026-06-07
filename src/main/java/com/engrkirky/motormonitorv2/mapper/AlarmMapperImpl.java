@@ -4,8 +4,17 @@ import com.engrkirky.motormonitorv2.dto.AlarmDTO;
 import com.engrkirky.motormonitorv2.model.Alarm;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper implementation for converting between Alarm entities and DTOs.
+ */
 @Component
 public class AlarmMapperImpl implements AlarmMapper {
+    /**
+     * Converts an Alarm entity to a DTO.
+     *
+     * @param alarm source entity
+     * @return mapped DTO
+     */
     @Override
     public AlarmDTO convertToDTO(Alarm alarm) {
         return new AlarmDTO(
@@ -16,6 +25,12 @@ public class AlarmMapperImpl implements AlarmMapper {
         );
     }
 
+    /**
+     * Converts an Alarm DTO to an entity.
+     *
+     * @param alarmDTO source DTO
+     * @return mapped entity
+     */
     @Override
     public Alarm convertToEntity(AlarmDTO alarmDTO) {
         return Alarm.builder()
