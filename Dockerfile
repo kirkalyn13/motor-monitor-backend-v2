@@ -6,7 +6,7 @@ COPY src ./src
 
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 COPY --from=build /app/target/motormonitorv2-0.0.1-SNAPSHOT.jar /app/motormonitorv2.jar
