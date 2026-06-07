@@ -33,7 +33,7 @@ This starts the app, PostgreSQL, and RabbitMQ together.
 
 With the app running, visit the [Swagger UI](http://localhost:8080/swagger-ui/index.html) for full API documentation.
 
-## Legacy Code
+## Related Projects
 
 To view the original code base used for the research project, visit [motor-monitor-backend-v1](https://github.com/kirkalyn13/motor-monitor-backend).
 
