@@ -9,6 +9,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for publishing messages to RabbitMQ.
+ */
 @Service
 public class RabbitMQSender {
     private static final Logger log = LoggerFactory.getLogger(RabbitMQSender.class);
@@ -21,6 +24,11 @@ public class RabbitMQSender {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Sends a metrics message.
+     *
+     * @param messageObject message payload
+     */
     public void sendMetricsMessage(Object messageObject) {
         try {
             String message = objectMapper.writeValueAsString(messageObject);
@@ -34,6 +42,11 @@ public class RabbitMQSender {
         }
     }
 
+    /**
+     * Sends an alarm message.
+     *
+     * @param messageObject message payload
+     */
     public void sendAlarmMessage(Object messageObject) {
         try {
             String message = objectMapper.writeValueAsString(messageObject);

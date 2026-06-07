@@ -51,6 +51,12 @@ public class ApiKeyFilter extends OncePerRequestFilter {
         }
     }
 
+    /**
+     * Determines whether the API key filter should be skipped.
+     *
+     * @param request incoming HTTP request
+     * @return true if filtering should be skipped, otherwise false
+     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();

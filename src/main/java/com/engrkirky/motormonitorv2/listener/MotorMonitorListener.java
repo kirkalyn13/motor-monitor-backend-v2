@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * RabbitMQ listener for processing motor monitor messages.
+ */
 @Component
 public class MotorMonitorListener {
     private static final Logger log = LoggerFactory.getLogger(MotorMonitorListener.class);
@@ -26,12 +29,18 @@ public class MotorMonitorListener {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);;
 
+
     @Autowired
     public MotorMonitorListener(MetricsService metricsService, AlarmService alarmService) {
         this.metricsService = metricsService;
         this.alarmService = alarmService;
     }
 
+    /**
+     * Processes incoming metrics messages.
+     *
+     * @param message metrics message payload
+     */
     @RabbitListener(queues = RabbitMQConfig.METRICS_QUEUE_NAME)
     public void onMetricsMessage(String message) {
         try {
@@ -44,6 +53,11 @@ public class MotorMonitorListener {
         }
     }
 
+    /**
+     * Processes incoming alarm messages.
+     *
+     * @param message alarm message payload
+     */
     @RabbitListener(queues = RabbitMQConfig.ALARMS_QUEUE_NAME)
     public void onAlarmMessage(String message) {
         try {
