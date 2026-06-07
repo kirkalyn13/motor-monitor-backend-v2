@@ -4,8 +4,17 @@ import com.engrkirky.motormonitorv2.dto.MetricsDTO;
 import com.engrkirky.motormonitorv2.model.Metrics;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper implementation for Metrics conversion.
+ */
 @Component
 public class MetricsMapperImpl implements MetricsMapper {
+    /**
+     * Converts Metrics entity to DTO.
+     *
+     * @param metrics source entity
+     * @return mapped DTO
+     */
     @Override
     public MetricsDTO convertToDTO(Metrics metrics) {
         return new MetricsDTO(
@@ -22,6 +31,12 @@ public class MetricsMapperImpl implements MetricsMapper {
         );
     }
 
+    /**
+     * Converts Metrics DTO to entity.
+     *
+     * @param metricsDTO source DTO
+     * @return mapped entity
+     */
     @Override
     public Metrics convertToEntity(MetricsDTO metricsDTO) {
         return Metrics.builder()
