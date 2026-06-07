@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service implementation for alarm management and analysis.
+ */
 @Service
 public class AlarmServiceImpl implements AlarmService {
     private final AlarmRepository alarmRepository;
@@ -26,6 +29,13 @@ public class AlarmServiceImpl implements AlarmService {
         this.alarmMapper = alarmMapper;
     }
 
+    /**
+     * Retrieves alarm history for a motor.
+     *
+     * @param id motor identifier
+     * @param limit time range in minutes
+     * @return alarm history
+     */
     @Override
     public List<AlarmDTO> getAlarmsHistoryByMotorID(String id, int limit) {
         LocalDateTime[] timestampRange = DateTimeUtil.getTimeRange(limit);
@@ -37,6 +47,15 @@ public class AlarmServiceImpl implements AlarmService {
                 .toList();
     }
 
+    /**
+     * Analyzes metrics and generates alarms.
+     *
+     * @param metricsDTO metrics data
+     * @param ratedVoltage rated voltage
+     * @param ratedCurrent rated current
+     * @param maxTemperature maximum temperature
+     * @return generated alarms
+     */
     @Override
     public List<AlarmDTO> analyzeMetrics(MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         List<AlarmDTO> alarms = new ArrayList<>();
@@ -167,6 +186,13 @@ public class AlarmServiceImpl implements AlarmService {
         return alarms;
     }
 
+    /**
+     * Stores alarm records.
+     *
+     * @param id motor identifier
+     * @param alarmDTOs alarms to store
+     * @return motor identifier
+     */
     @Override
     public String addAlarms(String id, List<AlarmDTO> alarmDTOs) {
         List<Alarm> alarms = alarmDTOs.stream().map(alarmMapper::convertToEntity).toList();
@@ -175,6 +201,12 @@ public class AlarmServiceImpl implements AlarmService {
         return id;
     }
 
+    /**
+     * Checks whether a severity level represents an alarm.
+     *
+     * @param severity severity level
+     * @return true if an alarm exists, otherwise false
+     */
     private static boolean hasAlarm(Severities severity) {
         return severity != Severities.NORMAL;
     }

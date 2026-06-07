@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Service implementation for managing motor metrics.
+ */
 @Service
 public class MetricsServiceImpl implements MetricsService {
     private final MetricsRepository metricsRepository;
@@ -36,6 +39,15 @@ public class MetricsServiceImpl implements MetricsService {
         this.rabbitMQSender = rabbitMQSender;
     }
 
+    /**
+     * Retrieves the latest metrics for a motor.
+     *
+     * @param id motor identifier
+     * @param ratedVoltage rated voltage
+     * @param ratedCurrent rated current
+     * @param maxTemperature maximum temperature
+     * @return latest metrics
+     */
     @Override
     public LatestMetricsDTO getLatestMetrics(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         return latestMetrcisMapper
@@ -45,6 +57,13 @@ public class MetricsServiceImpl implements MetricsService {
                         maxTemperature);
     }
 
+    /**
+     * Retrieves voltage trend data.
+     *
+     * @param id motor identifier
+     * @param limit time range in minutes
+     * @return voltage trend data
+     */
     @Override
     public List<VoltageDTO> getVoltageTrend(String id, int limit) {
         LocalDateTime[] timestampRange = DateTimeUtil.getTimeRange(limit);
@@ -52,6 +71,13 @@ public class MetricsServiceImpl implements MetricsService {
                 .findVoltageTrend(id, timestampRange[0], timestampRange[1]);
     }
 
+    /**
+     * Retrieves current trend data.
+     *
+     * @param id motor identifier
+     * @param limit time range in minutes
+     * @return current trend data
+     */
     @Override
     public List<CurrentDTO> getCurrentTrend(String id, int limit) {
         LocalDateTime[] timestampRange = DateTimeUtil.getTimeRange(limit);
@@ -59,6 +85,13 @@ public class MetricsServiceImpl implements MetricsService {
                 .findCurrentTrend(id, timestampRange[0], timestampRange[1]);
     }
 
+    /**
+     * Retrieves temperature trend data.
+     *
+     * @param id motor identifier
+     * @param limit time range in minutes
+     * @return temperature trend data
+     */
     @Override
     public List<TemperatureDTO> getTemperatureTrend(String id, int limit) {
         LocalDateTime[] timestampRange = DateTimeUtil.getTimeRange(limit);
@@ -66,6 +99,15 @@ public class MetricsServiceImpl implements MetricsService {
                 .findTemperatureTrend(id, timestampRange[0], timestampRange[1]);
     }
 
+    /**
+     * Retrieves a summary of motor metrics.
+     *
+     * @param id motor identifier
+     * @param ratedVoltage rated voltage
+     * @param ratedCurrent rated current
+     * @param maxTemperature maximum temperature
+     * @return metrics summary
+     */
     @Override
     public MetricsSummaryDTO getMetricsSummary(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         LatestMetricsDTO latestMetrics = latestMetrcisMapper
@@ -102,6 +144,16 @@ public class MetricsServiceImpl implements MetricsService {
         return new MetricsSummaryDTO(tally);
     }
 
+    /**
+     * Publishes metrics and generated alarms.
+     *
+     * @param motorID motor identifier
+     * @param metricsDTO metrics data
+     * @param ratedVoltage rated voltage
+     * @param ratedCurrent rated current
+     * @param maxTemperature maximum temperature
+     * @return motor identifier
+     */
     @Override
     public String publishMetrics(String motorID, MetricsDTO metricsDTO, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         rabbitMQSender.sendMetricsMessage(metricsDTO);
@@ -113,12 +165,26 @@ public class MetricsServiceImpl implements MetricsService {
         return motorID;
     }
 
+    /**
+     * Stores a metrics record.
+     *
+     * @param motorID motor identifier
+     * @param metricsDTO metrics data
+     * @return motor identifier
+     */
     @Override
     public String addMetrics(String motorID, MetricsDTO metricsDTO) {
         metricsRepository.save(metricsMapper.convertToEntity(metricsDTO));
         return motorID;
     }
 
+    /**
+     * Retrieves metrics logs.
+     *
+     * @param id motor identifier
+     * @param limit time range in minutes
+     * @return metrics logs
+     */
     @Override
     public List<MetricsDTO> getMetricsLogs(String id, int limit) {
         LocalDateTime[] timestampRange = DateTimeUtil.getTimeRange(limit);
@@ -129,6 +195,15 @@ public class MetricsServiceImpl implements MetricsService {
                 .toList();
     }
 
+    /**
+     * Retrieves alarms based on the latest metrics.
+     *
+     * @param id motor identifier
+     * @param ratedVoltage rated voltage
+     * @param ratedCurrent rated current
+     * @param maxTemperature maximum temperature
+     * @return list of alarms
+     */
     @Override
     public List<AlarmDTO> getAlarms(String id, double ratedVoltage, double ratedCurrent, double maxTemperature) {
         MetricsDTO metrics = metricsMapper.convertToDTO(metricsRepository.findLatestMetrics(id));
