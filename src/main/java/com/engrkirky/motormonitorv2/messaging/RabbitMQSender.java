@@ -21,13 +21,29 @@ public class RabbitMQSender {
         this.objectMapper = objectMapper;
     }
 
-    public void sendMessage(Object messageObject) {
+    public void sendMetricsMessage(Object messageObject) {
         try {
             String message = objectMapper.writeValueAsString(messageObject);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, message);
-            log.info("Message sent: " + message);
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE_NAME,
+                    RabbitMQConfig.METRICS_ROUTING_KEY,
+                    message);
+            log.info("Metrics message sent: " + message);
         } catch (JsonProcessingException e) {
-            log.error("Error occurred while sending message: {}", e.getMessage());
+            log.error("Error occurred while sending metrics message: {}", e.getMessage());
+        }
+    }
+
+    public void sendAlarmMessage(Object messageObject) {
+        try {
+            String message = objectMapper.writeValueAsString(messageObject);
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE_NAME,
+                    RabbitMQConfig.ALARMS_ROUTING_KEY,
+                    message);
+            log.info("Alarm message sent: " + message);
+        } catch (JsonProcessingException e) {
+            log.error("Error occurred while sending alarm message: {}", e.getMessage());
         }
     }
 }
