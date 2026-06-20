@@ -40,7 +40,6 @@ For dev purposers, it provisions and manages AWS-like resources locally via Loca
 
 ### Structure
 
-- `modules/` – Reusable Terraform modules (e.g., EC2, VPC, networking components)
 - `environments/` – Environment-specific configurations (local, dev, prod-ready layout)
 - `main.tf` – Root module entry point
 - `variables.tf` – Input variables
