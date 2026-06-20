@@ -1,9 +1,6 @@
 package com.engrkirky.motormonitorv2.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -14,62 +11,81 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource(value = "classpath:/application.properties")
 public class RabbitMQConfig {
-
+    // --- Main Queue constants ---
     public static final String METRICS_QUEUE_NAME = "motormonitorv2.metrics.queue";
-    public static final String ALARMS_QUEUE_NAME = "motormonitorv2.alarms.queue";
-    public static final String EXCHANGE_NAME = "motormonitorv2.exchange";
+    public static final String ALARMS_QUEUE_NAME  = "motormonitorv2.alarms.queue";
+    public static final String EXCHANGE_NAME       = "motormonitorv2.exchange";
     public static final String METRICS_ROUTING_KEY = "motormonitorv2.metrics.routing-key";
-    public static final String ALARMS_ROUTING_KEY = "motormonitorv2.alarms.routing-key";
+    public static final String ALARMS_ROUTING_KEY  = "motormonitorv2.alarms.routing-key";
 
-    /**
-     * Creates the metrics queue.
-     *
-     * @return metrics queue
-     */
+    // --- DLQ constants ---
+    public static final String DLX_NAME                  = "motormonitorv2.dlx";
+    public static final String METRICS_DLQ_NAME          = "motormonitorv2.metrics.dlq";
+    public static final String ALARMS_DLQ_NAME           = "motormonitorv2.alarms.dlq";
+    public static final String METRICS_DLQ_ROUTING_KEY   = "motormonitorv2.metrics.dead";
+    public static final String ALARMS_DLQ_ROUTING_KEY    = "motormonitorv2.alarms.dead";
+
+    // --- Main queues (updated to point at DLX) ---
+
     @Bean
     public Queue metricsQueue() {
-        return new Queue(METRICS_QUEUE_NAME, true);
+        return QueueBuilder.durable(METRICS_QUEUE_NAME)
+                .withArgument("x-dead-letter-exchange", DLX_NAME)
+                .withArgument("x-dead-letter-routing-key", METRICS_DLQ_ROUTING_KEY)
+                .build();
     }
 
-    /**
-     * Creates the alarms queue.
-     *
-     * @return alarms queue
-     */
     @Bean
     public Queue alarmsQueue() {
-        return new Queue(ALARMS_QUEUE_NAME, true);
+        return QueueBuilder.durable(ALARMS_QUEUE_NAME)
+                .withArgument("x-dead-letter-exchange", DLX_NAME)
+                .withArgument("x-dead-letter-routing-key", ALARMS_DLQ_ROUTING_KEY)
+                .build();
     }
 
-    /**
-     * Creates the topic exchange.
-     *
-     * @return topic exchange
-     */
+    // --- Dead letter exchange + queues ---
+
+    @Bean
+    public DirectExchange deadLetterExchange() {
+        return new DirectExchange(DLX_NAME);
+    }
+
+    @Bean
+    public Queue metricsDeadLetterQueue() {
+        return QueueBuilder.durable(METRICS_DLQ_NAME).build();
+    }
+
+    @Bean
+    public Queue alarmsDeadLetterQueue() {
+        return QueueBuilder.durable(ALARMS_DLQ_NAME).build();
+    }
+
+    @Bean
+    public Binding metricsDeadLetterBinding() {
+        return BindingBuilder.bind(metricsDeadLetterQueue())
+                .to(deadLetterExchange())
+                .with(METRICS_DLQ_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding alarmsDeadLetterBinding() {
+        return BindingBuilder.bind(alarmsDeadLetterQueue())
+                .to(deadLetterExchange())
+                .with(ALARMS_DLQ_ROUTING_KEY);
+    }
+
+    // --- Existing exchange and bindings (unchanged) ---
+
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE_NAME);
     }
 
-    /**
-     * Binds the metrics queue to the exchange.
-     *
-     * @param metricsQueue metrics queue
-     * @param exchange topic exchange
-     * @return queue binding
-     */
     @Bean
     public Binding metricsBinding(Queue metricsQueue, TopicExchange exchange) {
         return BindingBuilder.bind(metricsQueue).to(exchange).with(METRICS_ROUTING_KEY);
     }
 
-    /**
-     * Binds the alarms queue to the exchange.
-     *
-     * @param alarmsQueue alarms queue
-     * @param exchange topic exchange
-     * @return queue binding
-     */
     @Bean
     public Binding alarmsBinding(Queue alarmsQueue, TopicExchange exchange) {
         return BindingBuilder.bind(alarmsQueue).to(exchange).with(ALARMS_ROUTING_KEY);
