@@ -39,11 +39,14 @@ This directory contains all Infrastructure as Code (IaC) using Terraform.
 For dev purposers, it provisions and manages AWS-like resources locally via LocalStack for testing.
 
 ### Structure
+
 - `modules/` – Reusable Terraform modules (e.g., EC2, VPC, networking components)
 - `environments/` – Environment-specific configurations (local, dev, prod-ready layout)
 - `main.tf` – Root module entry point
 - `variables.tf` – Input variables
 - `outputs.tf` – Output values
+
+Modules are found in the [`platform-infra`](https://github.com/kirkalyn13/platform-infra) repository.
 
 ```bash
 terraform init
