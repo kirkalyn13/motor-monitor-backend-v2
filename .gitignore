@@ -37,6 +37,9 @@ build/
 dev.env
 !.env.example
 
+### MacOS ###
+*.DS_Store*
+
 # Terraform state files
 *.tfstate
 *.tfstate.*
